@@ -3,8 +3,8 @@ WorldInfo {
   coordinateSystem "NUE"
 }
 Viewpoint {
-  orientation -0.24190395326943157 -0.9508914856307594 -0.19310064719608785 1.4276802435918448
-  position -0.26066109146641014 0.7823085757856868 -0.7679399738333045
+  orientation -0.12823112637250011 -0.8850158140531702 -0.44755311093214867 2.6585031600337907
+  position 0.058971792490313396 1.751000459763433 -1.5823736301661346
 }
 TexturedBackground {
 }
@@ -183,7 +183,7 @@ Solid {
 }
 Robot {
   translation 0.9300002445579049 0.03971680354321434 -0.7705625791406238
-  rotation -3.4261198368571957e-06 0.9999983391487648 0.001822549854910142 3.1415911724276326
+  rotation -0.9999981494690644 0.0004089730611289339 -0.001879840280978488 -0.0036453071795863323
   children [
     DEF BODY Shape {
       appearance PBRAppearance {
@@ -242,8 +242,6 @@ Robot {
         boundingObject USE WHEEL
         physics Physics {
         }
-        linearVelocity 7.013119771616188e-09 0.00011046476335736326 8.904378731321246e-05
-        angularVelocity -0.9979235069990805 -6.5848691118783305e-06 -1.853648570284774e-06
       }
     }
     DEF WHEEL2 HingeJoint {
@@ -270,8 +268,6 @@ Robot {
         boundingObject USE WHEEL
         physics Physics {
         }
-        linearVelocity 1.4764386235608674e-08 0.00011042251192745939 8.901086314631606e-05
-        angularVelocity -0.9979235070371155 -6.583995799612145e-06 -1.8532052317177483e-06
       }
     }
     DEF WHEEL3 HingeJoint {
@@ -294,8 +290,6 @@ Robot {
         boundingObject USE WHEEL
         physics Physics {
         }
-        linearVelocity 3.123849952165452e-08 -9.297659558160774e-05 8.819695793216612e-05
-        angularVelocity -0.9979234934792469 -6.584616423162647e-06 -1.8537887021607605e-06
       }
     }
     DEF WHEEL4 HingeJoint {
@@ -318,8 +312,6 @@ Robot {
         boundingObject USE WHEEL
         physics Physics {
         }
-        linearVelocity 3.878851646287365e-08 -9.301871235343429e-05 8.81640484851265e-05
-        angularVelocity -0.9979234935386546 -6.583886001051279e-06 -1.8536726219432934e-06
       }
     }
     DEF DS_RIGHT DistanceSensor {
@@ -362,7 +354,5 @@ Robot {
     density -1
     mass 1
   }
-  controller "final_one"
-  linearVelocity 2.374012190795047e-08 8.897451275093123e-06 9.096158816905732e-05
-  angularVelocity 0.002075124123963415 2.702441396153233e-07 -3.546728111085042e-07
+  controller "final_one_python"
 }
