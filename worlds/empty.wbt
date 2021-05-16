@@ -3,8 +3,8 @@ WorldInfo {
   coordinateSystem "NUE"
 }
 Viewpoint {
-  orientation -0.12823112637250011 -0.8850158140531702 -0.44755311093214867 2.6585031600337907
-  position 0.058971792490313396 1.751000459763433 -1.5823736301661346
+  orientation -0.22656904366243463 -0.9224190988259888 -0.3127450632303259 1.9827468910322743
+  position -1.1488623338866277 1.073493046785638 -0.6776081769909431
 }
 TexturedBackground {
 }
@@ -182,7 +182,7 @@ Solid {
   ]
 }
 Robot {
-  translation 0.9300002445579049 0.03971680354321434 -0.7705625791406238
+  translation 0.02 0.039382 -0.680563
   rotation -0.9999981494690644 0.0004089730611289339 -0.001879840280978488 -0.0036453071795863323
   children [
     DEF BODY Shape {
@@ -276,6 +276,10 @@ Robot {
         anchor 0.06 0 -0.05
       }
       device [
+        PositionSensor {
+          name "ps2"
+          resolution 1
+        }
         RotationalMotor {
           name "wheel3"
         }
@@ -298,6 +302,10 @@ Robot {
         anchor -0.06 0 -0.05
       }
       device [
+        PositionSensor {
+          name "ps3"
+          resolution 1
+        }
         RotationalMotor {
           name "wheel4"
         }

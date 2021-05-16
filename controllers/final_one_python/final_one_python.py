@@ -1,54 +1,61 @@
 """Braitenberg-based obstacle-avoiding robot controller."""
 
-from controller import Robot
+from controller import Supervisor
 
 # Get reference to the robot.
-robot = Robot()
+robot = Supervisor()
 
 # Get simulation step length.
 timeStep = int(robot.getBasicTimeStep())
 
 # Constants of the Thymio II motors and distance sensors.
-maxMotorVelocity = 9.53
+maxMotorVelocity = 6.53
 distanceSensorCalibrationConstant = 360
 
-# Get left and right wheel motors.
-leftMotor = robot.getDevice("motor.left")
-rightMotor = robot.getDevice("motor.right")
+# --------------------------------------------------------------------
+# Initialize the arm motors and sensors. This is a generic code block
+# and works with any robotic arm.
+n = robot.getNumberOfDevices()
+motors = []
+sensors = []
+for i in range(n):
+    device = robot.getDeviceByIndex(i)
+    # print(device.getName(), '   - NodeType:', device.getNodeType())
+    # if device is a rotational motor (uncomment line above to get a list of all robot devices)
+    if device.getNodeType() == 54:
+        motors.append(device)
+        # Disable motor PID control mode. (change to velocity control)
+        device.setPosition(float('inf'))
+        sensor = device.getPositionSensor()
+        sensor.enable(timeStep)
+        sensors.append(sensor)
+# --------------------------------------------------------------------
 
 # Get frontal distance sensors.
-outerLeftSensor = robot.getDevice("prox.horizontal.0")
-centralLeftSensor = robot.getDevice("prox.horizontal.1")
-centralSensor = robot.getDevice("prox.horizontal.2")
-centralRightSensor = robot.getDevice("prox.horizontal.3")
-outerRightSensor = robot.getDevice("prox.horizontal.4")
-
+ds_right = robot.getDevice("ds_right")
+ds_left = robot.getDevice("ds_left")
 # Enable distance sensors.
-outerLeftSensor.enable(timeStep)
-centralLeftSensor.enable(timeStep)
-centralSensor.enable(timeStep)
-centralRightSensor.enable(timeStep)
-outerRightSensor.enable(timeStep)
-
-# Disable motor PID control mode.
-leftMotor.setPosition(float('inf'))
-rightMotor.setPosition(float('inf'))
+ds_right.enable(timeStep)
+ds_left.enable(timeStep)
 
 # Set ideal motor velocity.
 initialVelocity = 0.7 * maxMotorVelocity
 
-# Set the initial velocity of the left and right wheel motors.
-leftMotor.setVelocity(initialVelocity)
-rightMotor.setVelocity(initialVelocity)
+def set_motor_velocities(leftVelocity, rigtVelocity):
+    motors[0].setVelocity(leftVelocity)
+    motors[1].setVelocity(rigtVelocity)
+    motors[2].setVelocity(leftVelocity)
+    motors[3].setVelocity(rigtVelocity)
 
+# Set the initial velocity of the left and right wheel motors.
+set_motor_velocities(initialVelocity, initialVelocity)
+
+    
 while robot.step(timeStep) != -1:
     # Read values from four distance sensors and calibrate.
-    outerLeftSensorValue = outerLeftSensor.getValue() / distanceSensorCalibrationConstant
-    centralLeftSensorValue = centralLeftSensor.getValue() / distanceSensorCalibrationConstant
-    centralSensorValue = centralSensor.getValue() / distanceSensorCalibrationConstant
-    centralRightSensorValue = centralRightSensor.getValue() / distanceSensorCalibrationConstant
-    outerRightSensorValue = outerRightSensor.getValue() / distanceSensorCalibrationConstant
-
+    rightSensorValue = ds_right.getValue() / distanceSensorCalibrationConstant
+    leftSensorValue = ds_left.getValue() / distanceSensorCalibrationConstant
     # Set wheel velocities based on sensor values, prefer right turns if the central sensor is triggered.
-    leftMotor.setVelocity(initialVelocity - (centralRightSensorValue + outerRightSensorValue) / 2)
-    rightMotor.setVelocity(initialVelocity - (centralLeftSensorValue + outerLeftSensorValue) / 2 - centralSensorValue)
+    leftVelocity = initialVelocity - leftSensorValue
+    rigtVelocity = initialVelocity - rightSensorValue
+    set_motor_velocities(leftVelocity, rigtVelocity)
