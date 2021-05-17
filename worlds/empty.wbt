@@ -3,8 +3,8 @@ WorldInfo {
   coordinateSystem "NUE"
 }
 Viewpoint {
-  orientation 0.08487856767422176 -0.9927047638025678 -0.08563224085156673 4.770096347433469
-  position 0.6029741074999428 0.07837126806964848 -0.42623034789405384
+  orientation 0.3369234349130252 -0.9230371611763828 -0.18570136804518378 5.240335865764924
+  position 0.46274775403487634 0.40025075056073856 -0.2128680997449224
 }
 TexturedBackground {
 }
@@ -185,15 +185,35 @@ Robot {
   translation 0.0199991 0.159129 -0.610128
   rotation -0.9999981593472633 0.0004089630651672652 -0.0018745802987097902 -0.0036453071795863323
   children [
-    DEF BODY Shape {
-      appearance PBRAppearance {
-        baseColor 0.917647 0.145098 0.145098
-        roughness 1
-        metalness 0
-      }
-      geometry Box {
-        size 0.31 0.15 0.35
-      }
+    DEF BODY_Transform Transform {
+      children [
+        DEF BODY_BOX Shape {
+          appearance PBRAppearance {
+            baseColor 0.917647 0.145098 0.145098
+            roughness 1
+            metalness 0
+          }
+          geometry Box {
+            size 0.31 0.15 0.35
+          }
+        }
+        DEF BODY_CYLINDER Transform {
+          translation 0 0 0.2
+          children [
+            Shape {
+              appearance PBRAppearance {
+                baseColor 0.917647 0.145098 0.145098
+                roughness 1
+                metalness 0
+              }
+              geometry Cylinder {
+                height 0.1
+                radius 0.05
+              }
+            }
+          ]
+        }
+      ]
     }
     Camera {
       translation -2.12288e-07 0 0.08
@@ -220,7 +240,8 @@ Robot {
             }
           ]
           endPoint Solid {
-            rotation 1 0 0 0.7265378862516058
+            translation 2.0517934552766185e-05 -0.0019062506453894098 -0.000482907668521131
+            rotation 0.9999987507815947 -0.0014008903379227112 0.0007320802628302134 0.711553252654897
             children [
               DEF WHEEL Transform {
                 rotation 0 0 1 1.5708
@@ -264,7 +285,8 @@ Robot {
             }
           ]
           endPoint Solid {
-            rotation 1 0 0 0.7265378862516058
+            translation -5.7270624536753793e-05 -0.001894240733057581 -0.0004950824759260213
+            rotation 0.9999987481826742 -0.001402754038743399 0.0007320616033705289 0.7115532710429869
             children [
               DEF WHEEL Transform {
                 rotation 0 0 1 1.5708
@@ -301,6 +323,7 @@ Robot {
           jointParameters2 JointParameters {
           }
           endPoint Solid {
+            rotation -0.9972384282901186 0.03841149757552537 -0.06356157640791889 5.581565367009135
             children [
               DEF FRONT_WHEEL Shape {
                 geometry Sphere {
@@ -351,10 +374,15 @@ Robot {
       name "ds_left"
     }
   ]
-  boundingObject USE BODY
+  boundingObject Group {
+    children [
+      USE BODY_CYLINDER
+      USE BODY_BOX
+    ]
+  }
   physics Physics {
     density -1
-    mass 1
+    mass 2
   }
   controller "final_one_python"
 }
