@@ -3,8 +3,8 @@ WorldInfo {
   coordinateSystem "NUE"
 }
 Viewpoint {
-  orientation -0.22656904366243463 -0.9224190988259888 -0.3127450632303259 1.9827468910322743
-  position -1.1488623338866277 1.073493046785638 -0.6776081769909431
+  orientation 0.08487856767422176 -0.9927047638025678 -0.08563224085156673 4.770096347433469
+  position 0.6029741074999428 0.07837126806964848 -0.42623034789405384
 }
 TexturedBackground {
 }
@@ -182,8 +182,8 @@ Solid {
   ]
 }
 Robot {
-  translation 0.02 0.039382 -0.680563
-  rotation -0.9999981494690644 0.0004089730611289339 -0.001879840280978488 -0.0036453071795863323
+  translation 0.0199991 0.159129 -0.610128
+  rotation -0.9999981593472633 0.0004089630651672652 -0.0018745802987097902 -0.0036453071795863323
   children [
     DEF BODY Shape {
       appearance PBRAppearance {
@@ -192,7 +192,7 @@ Robot {
         metalness 0
       }
       geometry Box {
-        size 0.1 0.05 0.2
+        size 0.31 0.15 0.35
       }
     }
     Camera {
@@ -203,127 +203,121 @@ Robot {
       recognition Recognition {
       }
     }
-    DEF WHEEL1 HingeJoint {
-      jointParameters HingeJointParameters {
-        position 365.1512857026676
-        anchor 0.06 0 0.05
-      }
-      device [
-        PositionSensor {
-          name "ps0"
-          resolution 1
-        }
-        RotationalMotor {
-          name "wheel1"
+    DEF LEFT_WHEEL Transform {
+      translation 0.17 -0.03 -0.13
+      children [
+        DEF WHEEL1 HingeJoint {
+          jointParameters HingeJointParameters {
+            position 365.1512857026676
+          }
+          device [
+            PositionSensor {
+              name "ps0"
+              resolution 1
+            }
+            RotationalMotor {
+              name "motor_left"
+            }
+          ]
+          endPoint Solid {
+            rotation 1 0 0 0.7265378862516058
+            children [
+              DEF WHEEL Transform {
+                rotation 0 0 1 1.5708
+                children [
+                  Shape {
+                    appearance PBRAppearance {
+                      baseColor 0.305882 0.898039 0.25098
+                      roughness 1
+                      metalness 0
+                    }
+                    geometry Cylinder {
+                      height 0.03
+                      radius 0.116
+                      subdivision 24
+                    }
+                  }
+                ]
+              }
+            ]
+            boundingObject USE WHEEL
+            physics Physics {
+            }
+          }
         }
       ]
-      endPoint Solid {
-        translation 0.06 0 0.05
-        rotation 1 0 0 0.7265378862516058
-        children [
-          DEF WHEEL Transform {
-            rotation 0 0 1 1.5708
+    }
+    DEF RIGHT_WHEEL Transform {
+      translation -0.17 -0.03 -0.13
+      children [
+        DEF WHEEL1 HingeJoint {
+          jointParameters HingeJointParameters {
+            position 365.1512857026676
+          }
+          device [
+            PositionSensor {
+              name "ps1"
+              resolution 1
+            }
+            RotationalMotor {
+              name "motor_right"
+            }
+          ]
+          endPoint Solid {
+            rotation 1 0 0 0.7265378862516058
             children [
-              Shape {
-                appearance PBRAppearance {
-                  baseColor 0.305882 0.898039 0.25098
-                  roughness 1
-                  metalness 0
-                }
-                geometry Cylinder {
-                  height 0.02
-                  radius 0.04
-                  subdivision 24
+              DEF WHEEL Transform {
+                rotation 0 0 1 1.5708
+                children [
+                  Shape {
+                    appearance PBRAppearance {
+                      baseColor 0.305882 0.898039 0.25098
+                      roughness 1
+                      metalness 0
+                    }
+                    geometry Cylinder {
+                      height 0.03
+                      radius 0.116
+                      subdivision 24
+                    }
+                  }
+                ]
+              }
+            ]
+            name "solid(2)"
+            boundingObject USE WHEEL
+            physics Physics {
+            }
+          }
+        }
+      ]
+    }
+    Transform {
+      translation 0 -0.075 0.1
+      children [
+        Hinge2Joint {
+          jointParameters HingeJointParameters {
+          }
+          jointParameters2 JointParameters {
+          }
+          endPoint Solid {
+            children [
+              DEF FRONT_WHEEL Shape {
+                geometry Sphere {
+                  radius 0.05
                 }
               }
             ]
+            name "solid(1)"
+            boundingObject USE FRONT_WHEEL
+            physics Physics {
+            }
           }
-        ]
-        boundingObject USE WHEEL
-        physics Physics {
-        }
-      }
-    }
-    DEF WHEEL2 HingeJoint {
-      jointParameters HingeJointParameters {
-        position 313.9515939601649
-        anchor -0.06 0 0.05
-      }
-      device [
-        PositionSensor {
-          name "ps1"
-          resolution 1
-        }
-        RotationalMotor {
-          name "wheel2"
         }
       ]
-      endPoint Solid {
-        translation -0.06 0 0.05
-        rotation -0.9999999999999999 0 0 0.20767139881439498
-        children [
-          USE WHEEL
-        ]
-        name "solid(1)"
-        boundingObject USE WHEEL
-        physics Physics {
-        }
-      }
-    }
-    DEF WHEEL3 HingeJoint {
-      jointParameters HingeJointParameters {
-        position 365.15134613228787
-        anchor 0.06 0 -0.05
-      }
-      device [
-        PositionSensor {
-          name "ps2"
-          resolution 1
-        }
-        RotationalMotor {
-          name "wheel3"
-        }
-      ]
-      endPoint Solid {
-        translation 0.06 0 -0.05
-        rotation 1 0 0 0.7265983158718543
-        children [
-          USE WHEEL
-        ]
-        name "solid(2)"
-        boundingObject USE WHEEL
-        physics Physics {
-        }
-      }
-    }
-    DEF WHEEL4 HingeJoint {
-      jointParameters HingeJointParameters {
-        position 313.95165278294365
-        anchor -0.06 0 -0.05
-      }
-      device [
-        PositionSensor {
-          name "ps3"
-          resolution 1
-        }
-        RotationalMotor {
-          name "wheel4"
-        }
-      ]
-      endPoint Solid {
-        translation -0.06 0 -0.05
-        rotation -0.9999999999999999 0 0 0.20761257603566952
-        children [
-          USE WHEEL
-        ]
-        name "solid(3)"
-        boundingObject USE WHEEL
-        physics Physics {
-        }
-      }
     }
     DEF DS_RIGHT DistanceSensor {
-      translation -0.03 0 0.1
+      translation -0.0536408 0 0.176424
       rotation 0 1 0 -1.87079
       children [
         Shape {
@@ -340,7 +334,7 @@ Robot {
       name "ds_right"
     }
     DEF DS_LEFT DistanceSensor {
-      translation 0.03 0 0.1
+      translation 0.0536424 0 0.176424
       rotation 0 1 0 -1.27079
       children [
         Shape {
