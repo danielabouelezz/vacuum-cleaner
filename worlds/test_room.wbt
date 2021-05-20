@@ -3,8 +3,8 @@ WorldInfo {
   coordinateSystem "NUE"
 }
 Viewpoint {
-  orientation 0.024046279209108946 -0.9992376601145369 -0.03075508193816292 4.686306082318982
-  position 0.39676107577023634 0.017714282871214928 -2.251908789027089
+  orientation 0.3595643290132577 -0.9155917175313207 -0.18001472186821693 5.317372077449191
+  position 0.7236769527265439 0.41135860649672956 -1.5626685784479135
 }
 TexturedBackground {
 }
@@ -100,8 +100,12 @@ Robot {
       ]
     }
     Camera {
-      translation -2.12288e-07 0 0.08
+      translation -9.28752e-07 0 0.35
       rotation 0 1 0 3.14159
+      children [
+        Shape {
+        }
+      ]
       width 640
       height 640
       recognition Recognition {
@@ -197,7 +201,7 @@ Robot {
             position -0.0013627687631283393
           }
           endPoint Solid {
-            rotation -0.9994998370187883 0.020417450983160626 0.02414960651368084 1.8338508379386678
+            rotation -0.9994998370187883 0.02041745098316062 0.024149606513680835 1.8338508379386678
             children [
               DEF FRONT_WHEEL Shape {
                 geometry Sphere {
@@ -214,8 +218,8 @@ Robot {
       ]
     }
     DEF DS_RIGHT DistanceSensor {
-      translation -0.0536408 0 0.176424
-      rotation 0 1 0 -1.87079
+      translation -0.07 0 0.34
+      rotation 0 1 0 -2.094395307179586
       children [
         Shape {
           appearance PBRAppearance {
@@ -231,8 +235,8 @@ Robot {
       name "ds_right"
     }
     DEF DS_LEFT DistanceSensor {
-      translation 0.0536424 0 0.176424
-      rotation 0 1 0 -1.27079
+      translation 0.07 0 0.34
+      rotation 0 1 0 -1.0089953071795863
       children [
         Shape {
           appearance PBRAppearance {
