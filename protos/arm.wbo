@@ -1,0 +1,158 @@
+#VRML_OBJ R2021a utf8
+DEF ARM Transform {
+  translation 0 0.075 0.3
+  children [
+    DEF JOINT_1 HingeJoint {
+      jointParameters HingeJointParameters {
+        axis 0 1 0
+      }
+      device [
+        PositionSensor {
+          name "joint_1_sensor"
+        }
+        RotationalMotor {
+          name "joint_1_motor"
+        }
+      ]
+      endPoint DEF LINK_1 Solid {
+        children [
+          DEF SEGMENT_1 Transform {
+            children [
+              DEF ARM_SEGMENT Shape {
+                appearance PBRAppearance {
+                  baseColor 0.2 0.2 0.2
+                  roughness 0.5
+                }
+                geometry Capsule {
+                  height 0.063
+                  radius 0.0225
+                }
+              }
+            ]
+          }
+          DEF JOINT_2 HingeJoint {
+            jointParameters HingeJointParameters {
+              position 0.5
+              anchor 0 0.04 0
+            }
+            device [
+              PositionSensor {
+                name "joint_2_sensor"
+              }
+              RotationalMotor {
+                name "joint_2_motor"
+              }
+            ]
+            endPoint DEF LINK_2 Solid {
+              translation 0 0.04 0
+              rotation 1 0 0 0.5000000000000004
+              children [
+                DEF SEGMENT_2 Transform {
+                  translation 0 0.168 0
+                  children [
+                    Shape {
+                      appearance PBRAppearance {
+                        baseColor 0.2 0.2 0.2
+                        roughness 0.5
+                      }
+                      geometry Capsule {
+                        height 0.336
+                        radius 0.0225
+                      }
+                    }
+                  ]
+                }
+                DEF JOINT_3 HingeJoint {
+                  jointParameters HingeJointParameters {
+                    position 1.1
+                    anchor 0 0.324 0
+                  }
+                  device [
+                    PositionSensor {
+                      name "joint_3_sensor"
+                    }
+                    RotationalMotor {
+                      name "joint_3_motor"
+                    }
+                  ]
+                  endPoint DEF LINK_3 Solid {
+                    translation 0 0.324 0
+                    rotation 1 0 0 1.1000000000000003
+                    children [
+                      DEF SEGMENT_3 Transform {
+                        translation 0 0.087 0
+                        children [
+                          Shape {
+                            appearance PBRAppearance {
+                              baseColor 0.2 0.2 0.2
+                              roughness 0.5
+                            }
+                            geometry Capsule {
+                              height 0.186
+                              radius 0.0225
+                            }
+                          }
+                        ]
+                      }
+                      DEF JOINT_4 HingeJoint {
+                        jointParameters HingeJointParameters {
+                          position 1.2
+                          anchor 0 0.174 0
+                        }
+                        device [
+                          PositionSensor {
+                            name "joint_4_sensor"
+                          }
+                          RotationalMotor {
+                            name "joint_4_motor"
+                          }
+                        ]
+                        endPoint DEF LINK_4 Solid {
+                          translation 0 0.174 0
+                          rotation 1 0 0 1.2
+                          children [
+                            DEF SEGMENT_4 Transform {
+                              translation 0 0.161 0
+                              children [
+                                Shape {
+                                  appearance PBRAppearance {
+                                    baseColor 0.2 0.2 0.2
+                                    roughness 0.5
+                                  }
+                                  geometry Capsule {
+                                    height 0.334
+                                    radius 0.0225
+                                  }
+                                }
+                              ]
+                            }
+                          ]
+                          name "LINK_4"
+                          boundingObject USE SEGMENT_4
+                          physics Physics {
+                          }
+                        }
+                      }
+                    ]
+                    name "LINK_3"
+                    boundingObject USE SEGMENT_3
+                    physics Physics {
+                    }
+                  }
+                }
+              ]
+              name "LINK_2"
+              boundingObject USE SEGMENT_2
+              physics Physics {
+              }
+            }
+          }
+        ]
+        name "LINK_1"
+        boundingObject USE SEGMENT_1
+        physics Physics {
+        }
+      }
+    }
+  ]
+}
