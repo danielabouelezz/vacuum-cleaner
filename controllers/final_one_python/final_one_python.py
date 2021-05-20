@@ -44,18 +44,29 @@ initialVelocity = 0.7 * maxMotorVelocity
 def set_motor_velocities(leftVelocity, rigtVelocity):
     motors[0].setVelocity(leftVelocity)
     motors[1].setVelocity(rigtVelocity)
-    motors[2].setVelocity(leftVelocity)
-    motors[3].setVelocity(rigtVelocity)
 
 # Set the initial velocity of the left and right wheel motors.
 set_motor_velocities(initialVelocity, initialVelocity)
 
     
+
+# feedback loop: step simulation until receiving an exit event
 while robot.step(timeStep) != -1:
-    # Read values from four distance sensors and calibrate.
-    rightSensorValue = ds_right.getValue() / distanceSensorCalibrationConstant
-    leftSensorValue = ds_left.getValue() / distanceSensorCalibrationConstant
-    # Set wheel velocities based on sensor values, prefer right turns if the central sensor is triggered.
-    leftVelocity = initialVelocity - leftSensorValue
-    rigtVelocity = initialVelocity - rightSensorValue
-    set_motor_velocities(leftVelocity, rigtVelocity)
+    # detect obstacles
+    right_obstacle = ds_right.getValue() < 80.0 
+    left_obstacle =  ds_left.getValue() < 80.0 
+
+    # initialize motor speeds at 50% of maxMotorVelocity.
+    leftSpeed  = 0.5 * maxMotorVelocity
+    rightSpeed = 0.5 * maxMotorVelocity
+    # modify speeds according to obstacles
+    if left_obstacle:
+        # turn right
+        leftSpeed  = 0.5 * maxMotorVelocity
+        rightSpeed = -0.5 * maxMotorVelocity
+    elif right_obstacle:
+        # turn left
+        leftSpeed  = -0.5 * maxMotorVelocity
+        rightSpeed = 0.5 * maxMotorVelocity
+    # write actuators inputs
+    set_motor_velocities(leftSpeed, rightSpeed)
