@@ -3,8 +3,8 @@ WorldInfo {
   coordinateSystem "NUE"
 }
 Viewpoint {
-  orientation 0.3369234349130252 -0.9230371611763828 -0.18570136804518378 5.240335865764924
-  position 0.46274775403487634 0.40025075056073856 -0.2128680997449224
+  orientation 0.11482905992895524 -0.9913480868435663 -0.06358661578849259 5.370394505756843
+  position 0.8969937166200355 0.362660032654299 0.048254516476363474
 }
 TexturedBackground {
 }
@@ -182,8 +182,8 @@ Solid {
   ]
 }
 Robot {
-  translation 0.0199991 0.159129 -0.610128
-  rotation -0.9999981593472633 0.0004089630651672652 -0.0018745802987097902 -0.0036453071795863323
+  translation 0.0199031 0.155613 -0.54419
+  rotation -0.999999957557428 0.0001941903248433654 0.0002171986644766827 -0.08619002174380096
   children [
     DEF BODY_Transform Transform {
       children [
@@ -199,6 +199,7 @@ Robot {
         }
         DEF BODY_CYLINDER Transform {
           translation 0 0 0.2
+          scale 3.1 1.5 3.1
           children [
             Shape {
               appearance PBRAppearance {
@@ -209,6 +210,45 @@ Robot {
               geometry Cylinder {
                 height 0.1
                 radius 0.05
+              }
+            }
+          ]
+        }
+        DEF BODY_TOP_BOX Transform {
+          translation 0 0.09 -0.12
+          scale 3 0.3 1
+          children [
+            Shape {
+              appearance PBRAppearance {
+              }
+              geometry Box {
+                size 0.1 0.1 0.1
+              }
+            }
+          ]
+        }
+        DEF BODY_TOP_BOX2 Transform {
+          translation 0 0.09 0
+          scale 2 0.25 1
+          children [
+            Shape {
+              appearance PBRAppearance {
+              }
+              geometry Box {
+                size 0.1 0.1 0.1
+              }
+            }
+          ]
+        }
+        DEF BODY_TOP_BOX3 Transform {
+          translation 0 0.085 0.1
+          scale 1 0.2 0.75
+          children [
+            Shape {
+              appearance PBRAppearance {
+              }
+              geometry Box {
+                size 0.1 0.1 0.1
               }
             }
           ]
@@ -228,7 +268,7 @@ Robot {
       children [
         DEF WHEEL1 HingeJoint {
           jointParameters HingeJointParameters {
-            position 365.1512857026676
+            position 376.560462896205
           }
           device [
             PositionSensor {
@@ -240,8 +280,8 @@ Robot {
             }
           ]
           endPoint Solid {
-            translation 2.0517934552766185e-05 -0.0019062506453894098 -0.000482907668521131
-            rotation 0.9999987507815947 -0.0014008903379227112 0.0007320802628302134 0.711553252654897
+            translation 2.0517934552766185e-05 -0.0012083314440056888 0.001551427233482507
+            rotation -0.999996896310271 -0.0012176867492400612 0.0021736165268155076 0.4456423217272904
             children [
               DEF WHEEL Transform {
                 rotation 0 0 1 1.5708
@@ -273,7 +313,7 @@ Robot {
       children [
         DEF WHEEL1 HingeJoint {
           jointParameters HingeJointParameters {
-            position 365.1512857026676
+            position 376.5604619384381
           }
           device [
             PositionSensor {
@@ -285,8 +325,8 @@ Robot {
             }
           ]
           endPoint Solid {
-            translation -5.7270624536753793e-05 -0.001894240733057581 -0.0004950824759260213
-            rotation 0.9999987481826742 -0.001402754038743399 0.0007320616033705289 0.7115532710429869
+            translation -5.727062453675379e-05 -0.0012146512691165192 0.001535537986237133
+            rotation -0.9999968898660355 -0.0012201587482029098 0.002175194447725858 0.4456432655836289
             children [
               DEF WHEEL Transform {
                 rotation 0 0 1 1.5708
@@ -319,11 +359,13 @@ Robot {
       children [
         Hinge2Joint {
           jointParameters HingeJointParameters {
+            position 3.7500078049517453
           }
           jointParameters2 JointParameters {
+            position -0.0013627687631283393
           }
           endPoint Solid {
-            rotation -0.9972384282901186 0.03841149757552537 -0.06356157640791889 5.581565367009135
+            rotation -0.9994998370187883 0.02041745098316066 0.02414960651368088 1.8338508379386678
             children [
               DEF FRONT_WHEEL Shape {
                 geometry Sphere {
