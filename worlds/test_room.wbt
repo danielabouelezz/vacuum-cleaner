@@ -3,8 +3,13 @@ WorldInfo {
   coordinateSystem "NUE"
 }
 Viewpoint {
+<<<<<<< HEAD
   orientation -0.3419813912470292 0.874480684480278 0.3439945646542264 1.2625705934745706
   position 5.883264885594699 4.656119534307687 2.8621448904503977
+=======
+  orientation 0.40884394000627783 -0.8834611205612688 -0.2287861035482063 5.18114414427116
+  position 0.8388743969498056 0.7606161017003008 -1.6279837441455653
+>>>>>>> 9f599e1809fe4b0635ebee9d0e8e01987cc0e60e
 }
 TexturedBackground {
 }
@@ -208,7 +213,11 @@ Robot {
             position -0.0014916956722865926
           }
           endPoint Solid {
+<<<<<<< HEAD
             rotation -0.9992970406926485 0.018464086007864932 0.0326267067110569 1.4644094344999925
+=======
+            rotation -0.9994998370187883 0.020417450983160574 0.02414960651368078 1.8338508379386678
+>>>>>>> 9f599e1809fe4b0635ebee9d0e8e01987cc0e60e
             children [
               DEF FRONT_WHEEL Shape {
                 geometry Sphere {
@@ -271,6 +280,173 @@ Robot {
       numberOfRays 5
       aperture 2
     }
+    DEF ARM Transform {
+      translation 0 0.075 0.3
+      children [
+        DEF JOINT_1 HingeJoint {
+          jointParameters HingeJointParameters {
+            axis 0 1 0
+          }
+          device [
+            PositionSensor {
+              name "joint_1_sensor"
+            }
+            RotationalMotor {
+              name "joint_1_motor"
+            }
+          ]
+          endPoint DEF LINK_1 Solid {
+            children [
+              DEF SEGMENT_1 Transform {
+                children [
+                  DEF ARM_SEGMENT Shape {
+                    appearance DEF ARM_SEGMENTS PBRAppearance {
+                      baseColor 0.239216 0.239216 0.239216
+                      roughness 0.5
+                    }
+                    geometry Capsule {
+                      height 0.063
+                      radius 0.0225
+                    }
+                  }
+                ]
+              }
+              DEF JOINT_2 HingeJoint {
+                jointParameters HingeJointParameters {
+                  position 0.5
+                  anchor 0 0.04 0
+                }
+                device [
+                  PositionSensor {
+                    name "joint_2_sensor"
+                  }
+                  RotationalMotor {
+                    name "joint_2_motor"
+                  }
+                ]
+                endPoint DEF LINK_2 Solid {
+                  translation 0 0.04 0
+                  rotation 1 0 0 0.5000000000000004
+                  children [
+                    DEF SEGMENT_2 Transform {
+                      translation 0 0.168 0
+                      children [
+                        Shape {
+                          appearance USE ARM_SEGMENTS
+                          geometry Capsule {
+                            height 0.336
+                            radius 0.0225
+                          }
+                        }
+                      ]
+                    }
+                    DEF JOINT_3 HingeJoint {
+                      jointParameters HingeJointParameters {
+                        position 1.1
+                        anchor 0 0.324 0
+                      }
+                      device [
+                        PositionSensor {
+                          name "joint_3_sensor"
+                        }
+                        RotationalMotor {
+                          name "joint_3_motor"
+                        }
+                      ]
+                      endPoint DEF LINK_3 Solid {
+                        translation 0 0.324 0
+                        rotation 1 0 0 1.1000000000000003
+                        children [
+                          DEF SEGMENT_3 Transform {
+                            translation 0 0.087 0
+                            children [
+                              Shape {
+                                appearance USE ARM_SEGMENTS
+                                geometry Capsule {
+                                  height 0.186
+                                  radius 0.0225
+                                }
+                              }
+                            ]
+                          }
+                          DEF JOINT_4 HingeJoint {
+                            jointParameters HingeJointParameters {
+                              position 1.2
+                              anchor 0 0.174 0
+                            }
+                            device [
+                              PositionSensor {
+                                name "joint_4_sensor"
+                              }
+                              RotationalMotor {
+                                name "joint_4_motor"
+                              }
+                            ]
+                            endPoint DEF LINK_4 Solid {
+                              translation 0 0.174 0
+                              rotation 1 0 0 1.2
+                              children [
+                                Solid {
+                                  translation 0 0.34 0
+                                  children [
+                                    Transform {
+                                      children [
+                                        Shape {
+                                          appearance USE ARM_SEGMENTS
+                                          geometry Box {
+                                            size 0.25 0.02 0.06
+                                          }
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                                DEF SEGMENT_4 Transform {
+                                  translation 0 0.161 0
+                                  children [
+                                    Shape {
+                                      appearance USE ARM_SEGMENTS
+                                      geometry Capsule {
+                                        height 0.334
+                                        radius 0.0225
+                                      }
+                                    }
+                                  ]
+                                }
+                              ]
+                              name "LINK_4"
+                              boundingObject USE SEGMENT_4
+                              physics Physics {
+                                density 300
+                              }
+                            }
+                          }
+                        ]
+                        name "LINK_3"
+                        boundingObject USE SEGMENT_3
+                        physics Physics {
+                          density 300
+                        }
+                      }
+                    }
+                  ]
+                  name "LINK_2"
+                  boundingObject USE SEGMENT_2
+                  physics Physics {
+                    density 300
+                  }
+                }
+              }
+            ]
+            name "LINK_1"
+            boundingObject USE SEGMENT_1
+            physics Physics {
+              density 300
+            }
+          }
+        }
+      ]
+    }
   ]
   boundingObject Group {
     children [
@@ -280,7 +456,7 @@ Robot {
   }
   physics Physics {
     density -1
-    mass 2
+    mass 5
   }
   controller "final_one_python"
   linearVelocity -1.7087934710137854e-06 -5.761025590882728e-09 0.19916500449673663
