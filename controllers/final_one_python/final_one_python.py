@@ -1,6 +1,11 @@
 """Braitenberg-based obstacle-avoiding robot controller."""
 
 from controller import Supervisor
+from controller import Camera
+from controller import DistanceSensor
+from controller import CameraRecognitionObject
+
+
 
 # Get reference to the robot.
 robot = Supervisor()
@@ -12,7 +17,23 @@ timeStep = int(robot.getBasicTimeStep())
 maxMotorVelocity = 6.53
 distanceSensorCalibrationConstant = 360
 
+def initialization(self):
+        
+        self.mode = self.Mode.AVOIDOBSTACLES
+        self.camera = self.getCamera('camera')
+        self.camera.enable(4 * self.timeStep)
+        width = Camera.getWidth(self.camera)
+        height = Camera.getHeight(self.camera)
+        imagecameraki = Camera.getImage(self.camera)
+        #camera_recognition_object.get_id()
+        #Camera.getRecognitionObjects(self.camera)
+
+
+
+
 # --------------------------------------------------------------------
+
+
 # Initialize the arm motors and sensors. This is a generic code block
 # and works with any robotic arm.
 n = robot.getNumberOfDevices()
@@ -46,27 +67,27 @@ def set_motor_velocities(leftVelocity, rigtVelocity):
     motors[1].setVelocity(rigtVelocity)
 
 # Set the initial velocity of the left and right wheel motors.
-set_motor_velocities(initialVelocity, initialVelocity)
+set_motor_velocities(initialVelocity,initialVelocity)
 
     
 
 # feedback loop: step simulation until receiving an exit event
 while robot.step(timeStep) != -1:
     # detect obstacles
-    right_obstacle = ds_right.getValue() < 80.0 
+    right_obstacle = ds_right.getValue() < 80.0
     left_obstacle =  ds_left.getValue() < 80.0 
-
+    print("left:{} right:{}".format(left_obstacle,right_obstacle))
     # initialize motor speeds at 50% of maxMotorVelocity.
-    leftSpeed  = 0.5 * maxMotorVelocity
-    rightSpeed = 0.5 * maxMotorVelocity
+    leftVelocity  = 0.5 * maxMotorVelocity
+    rigtVelocity = 0.5 * maxMotorVelocity
     # modify speeds according to obstacles
     if left_obstacle:
         # turn right
-        leftSpeed  = 0.5 * maxMotorVelocity
-        rightSpeed = -0.5 * maxMotorVelocity
+        leftVelocity  = 0.5 * maxMotorVelocity
+        rigtVelocity = -0.5 * maxMotorVelocity
     elif right_obstacle:
         # turn left
-        leftSpeed  = -0.5 * maxMotorVelocity
-        rightSpeed = 0.5 * maxMotorVelocity
+        leftVelocity  = -0.5 * maxMotorVelocity
+        rigtVelocity = 0.5 * maxMotorVelocity
     # write actuators inputs
-    set_motor_velocities(leftSpeed, rightSpeed)
+    set_motor_velocities(leftVelocity, rigtVelocity)
