@@ -1,9 +1,6 @@
 """Braitenberg-based obstacle-avoiding robot controller."""
 
 from controller import Supervisor
-from controller import Camera
-from controller import DistanceSensor
-from controller import CameraRecognitionObject
 
 
 
@@ -17,18 +14,6 @@ timeStep = int(robot.getBasicTimeStep())
 maxMotorVelocity = 6.53
 distanceSensorCalibrationConstant = 360
 
-def initialization(self):
-        
-        self.mode = self.Mode.AVOIDOBSTACLES
-        self.camera = self.getCamera('camera')
-        self.camera.enable(4 * self.timeStep)
-        width = Camera.getWidth(self.camera)
-        height = Camera.getHeight(self.camera)
-        imagecameraki = Camera.getImage(self.camera)
-        #camera_recognition_object.get_id()
-        #Camera.getRecognitionObjects(self.camera)
-
-
 
 
 # --------------------------------------------------------------------
@@ -41,7 +26,7 @@ motors = []
 sensors = []
 for i in range(n):
     device = robot.getDeviceByIndex(i)
-    # print(device.getName(), '   - NodeType:', device.getNodeType())
+    print(device.getName(), '   - NodeType:', device.getNodeType())
     # if device is a rotational motor (uncomment line above to get a list of all robot devices)
     if device.getNodeType() == 54:
         motors.append(device)
@@ -50,6 +35,13 @@ for i in range(n):
         sensor = device.getPositionSensor()
         sensor.enable(timeStep)
         sensors.append(sensor)
+
+ 
+camera = robot.getDevice('camera')
+camera.enable(timeStep)
+
+ 
+ 
 # --------------------------------------------------------------------
 
 # Get frontal distance sensors.
@@ -74,8 +66,8 @@ set_motor_velocities(initialVelocity,initialVelocity)
 # feedback loop: step simulation until receiving an exit event
 while robot.step(timeStep) != -1:
     # detect obstacles
-    right_obstacle = ds_right.getValue() < 80.0
-    left_obstacle =  ds_left.getValue() < 80.0 
+    right_obstacle = ds_right.getValue() < 500.0
+    left_obstacle =  ds_left.getValue() < 500.0 
     print("left:{} right:{}".format(left_obstacle,right_obstacle))
     # initialize motor speeds at 50% of maxMotorVelocity.
     leftVelocity  = 0.5 * maxMotorVelocity
