@@ -3,13 +3,8 @@ WorldInfo {
   coordinateSystem "NUE"
 }
 Viewpoint {
-<<<<<<< HEAD
-  orientation -0.3419813912470292 0.874480684480278 0.3439945646542264 1.2625705934745706
-  position 5.883264885594699 4.656119534307687 2.8621448904503977
-=======
   orientation 0.020411426790335155 -0.9977487240766734 -0.06388158779924896 3.855804518743259
   position 1.3057395432909165 0.5973549093013265 -1.7414854917677312
->>>>>>> 02abc953e27dcfaa993a720d20faaaaae089c230
 }
 TexturedBackground {
 }
@@ -141,13 +136,8 @@ DEF ARMCHAIR Solid {
   ]
 }
 Robot {
-<<<<<<< HEAD
-  translation 0.01992533902842004 0.09499391316905215 -1.384411556484156
-  rotation -0.9999950648555357 0.003141697175391975 -1.8523920447372147e-06 -0.0027300553250394154
-=======
   translation 0.019923320486261116 0.09379161551667645 -1.1492118305642403
   rotation -0.9999993836549795 0.0011102599688704948 -3.5302669951538975e-06 -0.007646744335871109
->>>>>>> 02abc953e27dcfaa993a720d20faaaaae089c230
   children [
     DEF BODY_Transform Transform {
       children [
@@ -241,11 +231,7 @@ Robot {
       children [
         HingeJoint {
           jointParameters HingeJointParameters {
-<<<<<<< HEAD
-            position 17.719807231042697
-=======
             position 21.627358860100898
->>>>>>> 02abc953e27dcfaa993a720d20faaaaae089c230
             axis 0 1 0
           }
           device [
@@ -258,11 +244,7 @@ Robot {
             }
           ]
           endPoint Solid {
-<<<<<<< HEAD
-            rotation 0 0.9999999999999999 0 5.153436616683524
-=======
             rotation 0 -0.9999999999999999 0 3.5053823686174477
->>>>>>> 02abc953e27dcfaa993a720d20faaaaae089c230
             children [
               DEF WHEEL_SHAPE Shape {
                 appearance PBRAppearance {
@@ -280,11 +262,6 @@ Robot {
             boundingObject USE WHEEL_SHAPE
             physics Physics {
             }
-<<<<<<< HEAD
-            linearVelocity 2.35710047475897e-15 5.66098814099102e-08 -2.648319450568135e-11
-            angularVelocity -4.341083246758956e-10 -4.337141317049091e-15 -4.155037474889746e-14
-=======
->>>>>>> 02abc953e27dcfaa993a720d20faaaaae089c230
           }
         }
       ]
@@ -295,11 +272,7 @@ Robot {
       children [
         HingeJoint {
           jointParameters HingeJointParameters {
-<<<<<<< HEAD
-            position 17.71980725609329
-=======
             position 21.62735888515369
->>>>>>> 02abc953e27dcfaa993a720d20faaaaae089c230
             axis 0 1 0
           }
           device [
@@ -312,11 +285,7 @@ Robot {
             }
           ]
           endPoint Solid {
-<<<<<<< HEAD
-            rotation 0 0.9999999999999999 0 5.1534366417341175
-=======
             rotation 0 -0.9999999999999999 0 3.505382343564656
->>>>>>> 02abc953e27dcfaa993a720d20faaaaae089c230
             children [
               DEF WHEEL_SHAPE Shape {
                 appearance PBRAppearance {
@@ -335,11 +304,6 @@ Robot {
             boundingObject USE WHEEL_SHAPE
             physics Physics {
             }
-<<<<<<< HEAD
-            linearVelocity 2.371169120121623e-15 5.6609540540000174e-08 -2.6483173347381702e-11
-            angularVelocity -4.3410811634583314e-10 -4.34478228746994e-15 -3.903098684141852e-14
-=======
->>>>>>> 02abc953e27dcfaa993a720d20faaaaae089c230
           }
         }
       ]
@@ -349,15 +313,6 @@ Robot {
       children [
         Hinge2Joint {
           jointParameters HingeJointParameters {
-<<<<<<< HEAD
-            position 54.385150325399216
-          }
-          jointParameters2 JointParameters {
-            position -0.0014916956526443079
-          }
-          endPoint Solid {
-            rotation -0.9992970406925468 0.018464086024217674 0.032626706704917886 1.4644094347985037
-=======
             position 65.56233174974832
           }
           jointParameters2 JointParameters {
@@ -365,7 +320,6 @@ Robot {
           }
           endPoint Solid {
             rotation -0.9996843932328232 0.024741151105068988 0.004357679281208409 3.222531382943241
->>>>>>> 02abc953e27dcfaa993a720d20faaaaae089c230
             children [
               DEF FRONT_WHEEL Shape {
                 geometry Sphere {
@@ -377,11 +331,6 @@ Robot {
             boundingObject USE FRONT_WHEEL
             physics Physics {
             }
-<<<<<<< HEAD
-            linearVelocity 8.406569828516173e-17 1.286348838928618e-07 -7.080592662577331e-12
-            angularVelocity -3.3717254720019434e-10 -1.2405050307066382e-14 -4.005617578305625e-15
-=======
->>>>>>> 02abc953e27dcfaa993a720d20faaaaae089c230
           }
         }
       ]
