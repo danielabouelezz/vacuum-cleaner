@@ -1,5 +1,6 @@
 """Braitenberg-based obstacle-avoiding robot controller."""
 
+
 from controller import Supervisor
 
 
@@ -20,15 +21,30 @@ distanceSensorCalibrationConstant = 360
 
 
 # Initialize the arm motors and sensors. This is a generic code block
-# and works with any robotic arm. 
-    
+# and works with any robotic arm.
+n = robot.getNumberOfDevices()
+motors = []
+sensors = []
+for i in range(n):
+    device = robot.getDeviceByIndex(i)
+    print(device.getName(), '   - NodeType:', device.getNodeType())
+    # if device is a rotational motor (uncomment line above to get a list of all robot devices)
+    if device.getNodeType() == 54:
+        motors.append(device)
+        # Disable motor PID control mode. (change to velocity control)
+        device.setPosition(float('inf'))
+        sensor = device.getPositionSensor()
+        sensor.enable(timeStep)
+        sensors.append(sensor)
+
+ 
 camera = robot.getDevice('camera')
 camera.enable(timeStep)
 camera.recognitionEnable(timeStep)
 camera.getRecognitionObjects()
 lidar=robot.getDevice('lidar')
 lidar.enable(timeStep)
-lidar.getRangeImage()
+
 lidar.enablePointCloud()
 lidar_horz=lidar.getHorizontalResolution()
  
@@ -36,52 +52,52 @@ lidar_horz=lidar.getHorizontalResolution()
 # --------------------------------------------------------------------
 
 # Get frontal distance sensors.
-# Set ideal motor velocity.
-
-leftMotor = robot.getDevice("motor_left")
-rightMotor = robot.getDevice("motor_right")
-
-# Set the initial velocity of the left and right wheel motors.
-#set_motor_velocities(initialVelocity,initialVelocity)
-
-    
-
-# Get frontal distance sensors.
-outerLeftSensor = robot.getDevice("ds_left")
-centralLeftSensor = robot.getDevice("ds_central_left")
-centralSensor = robot.getDevice("ds_central")
-centralRightSensor = robot.getDevice("ds_central_right")
-outerRightSensor = robot.getDevice("ds_right")
-
+ds_right = robot.getDevice("ds_right")
+ds_left = robot.getDevice("ds_left")
 # Enable distance sensors.
-outerLeftSensor.enable(timeStep)
-centralLeftSensor.enable(timeStep)
-centralSensor.enable(timeStep)
-centralRightSensor.enable(timeStep)
-outerRightSensor.enable(timeStep)
-
-# Disable motor PID control mode.
-leftMotor.setPosition(float('inf'))
-rightMotor.setPosition(float('inf'))
+ds_right.enable(timeStep)
+ds_left.enable(timeStep)
 
 # Set ideal motor velocity.
 initialVelocity = 0.7 * maxMotorVelocity
 
-# Set the initial velocity of the left and right wheel motors.
-leftMotor.setVelocity(initialVelocity)
-rightMotor.setVelocity(initialVelocity)
+def set_motor_velocities(leftVelocity, rigtVelocity):
+    motors[0].setVelocity(leftVelocity)
+    motors[1].setVelocity(rigtVelocity)
 
+# Set the initial velocity of the left and right wheel motors.
+set_motor_velocities(initialVelocity,initialVelocity)
+
+    
+
+# feedback loop: step simulation until receiving an exit event
 while robot.step(timeStep) != -1:
-    # Read values from four distance sensors and calibrate.
-    outerLeftSensorValue = outerLeftSensor.getValue() / distanceSensorCalibrationConstant
-    centralLeftSensorValue = centralLeftSensor.getValue() / distanceSensorCalibrationConstant
-    centralSensorValue = centralSensor.getValue() / distanceSensorCalibrationConstant
-    centralRightSensorValue = centralRightSensor.getValue() / distanceSensorCalibrationConstant
-    outerRightSensorValue = outerRightSensor.getValue() / distanceSensorCalibrationConstant
-    print("left:{} right:{} central_left:{} center_right:{} central:{}".format(outerLeftSensorValue,outerRightSensorValue,centralLeftSensorValue,centralRightSensorValue,centralSensorValue))
-    # Set wheel velocities based on sensor values, prefer right turns if the central sensor is triggered.
-    leftMotor.setVelocity(initialVelocity - (centralRightSensorValue + outerRightSensorValue) / 2)
-    rightMotor.setVelocity(initialVelocity - (centralLeftSensorValue + outerLeftSensorValue) / 2 - centralSensorValue)
+    
+    # detect obstacles
+    right_obstacle = ds_right.getValue() < 500.0
+    left_obstacle =  ds_left.getValue() < 500.0 
+    print("left:{} right:{}".format(left_obstacle,right_obstacle))
+    # initialize motor speeds at 50% of maxMotorVelocity.
+    leftVelocity  = 0.5 * maxMotorVelocity
+    rigtVelocity = 0.5 * maxMotorVelocity
+    # modify speeds according to obstacles
+    if left_obstacle:
+        # turn right
+        leftVelocity  = 0.5 * maxMotorVelocity
+        rigtVelocity = -0.5 * maxMotorVelocity
+    elif right_obstacle:
+        # turn left
+        leftVelocity  = -0.5 * maxMotorVelocity
+        rigtVelocity = 0.5 * maxMotorVelocity
+
+        
+    # write actuators inputs
+    set_motor_velocities(leftVelocity, rigtVelocity)
+
+    
+
+
+
 
     
 
