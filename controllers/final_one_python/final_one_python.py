@@ -1,5 +1,6 @@
 """Braitenberg-based obstacle-avoiding robot controller."""
 
+
 from controller import Supervisor
 
 
@@ -11,7 +12,7 @@ robot = Supervisor()
 timeStep = int(robot.getBasicTimeStep())
 
 # Constants of the Thymio II motors and distance sensors.
-maxMotorVelocity = 6.53
+maxMotorVelocity = 6
 distanceSensorCalibrationConstant = 360
 
 
@@ -82,6 +83,12 @@ while robot.step(timeStep) != -1:
     # Set wheel velocities based on sensor values, prefer right turns if the central sensor is triggered.
     leftMotor.setVelocity(initialVelocity - (centralRightSensorValue + outerRightSensorValue) / 2)
     rightMotor.setVelocity(initialVelocity - (centralLeftSensorValue + outerLeftSensorValue) / 2 - centralSensorValue)
+
+    
+
+
+
+
 
     
 
