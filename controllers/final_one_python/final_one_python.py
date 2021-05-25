@@ -13,7 +13,8 @@ timeStep = int(robot.getBasicTimeStep())
 
 # Constants of the Thymio II motors and distance sensors.
 maxMotorVelocity = 6
-distanceSensorCalibrationConstant = 360
+# For how many steps the robot turns when detecting an obstacle (higher number turns more)
+turningSteps = 20
 
 
 
@@ -53,6 +54,7 @@ centralLeftSensor = robot.getDevice("ds_central_left")
 centralSensor = robot.getDevice("ds_central")
 centralRightSensor = robot.getDevice("ds_central_right")
 outerRightSensor = robot.getDevice("ds_right")
+distanceSensors = [outerLeftSensor, centralLeftSensor, centralSensor, centralRightSensor, outerRightSensor]
 
 # Enable distance sensors.
 outerLeftSensor.enable(timeStep)
@@ -74,15 +76,41 @@ rightMotor.setVelocity(initialVelocity)
 
 while robot.step(timeStep) != -1:
     # Read values from four distance sensors and calibrate.
-    outerLeftSensorValue = outerLeftSensor.getValue() / distanceSensorCalibrationConstant
-    centralLeftSensorValue = centralLeftSensor.getValue() / distanceSensorCalibrationConstant
-    centralSensorValue = centralSensor.getValue() / distanceSensorCalibrationConstant
-    centralRightSensorValue = centralRightSensor.getValue() / distanceSensorCalibrationConstant
-    outerRightSensorValue = outerRightSensor.getValue() / distanceSensorCalibrationConstant
-    print("left:{} right:{} central_left:{} center_right:{} central:{}".format(outerLeftSensorValue,outerRightSensorValue,centralLeftSensorValue,centralRightSensorValue,centralSensorValue))
-    # Set wheel velocities based on sensor values, prefer right turns if the central sensor is triggered.
-    leftMotor.setVelocity(initialVelocity - (centralRightSensorValue + outerRightSensorValue) / 2)
-    rightMotor.setVelocity(initialVelocity - (centralLeftSensorValue + outerLeftSensorValue) / 2 - centralSensorValue)
+    distances = []
+    for sensor in distanceSensors:
+        distances.append(sensor.getValue())
+    # detect obstacles
+    obstacle = False
+    if min(distances) < 900:
+        obstacle = True
+        left_obstacle = distances[0] + distances[1] < distances[3] + distances[4]            
+        right_obstacle = distances[0] + distances[1] > distances[3] + distances[4]
+        # in case we only have obstacle in front, we still have to turn
+        if left_obstacle is False and right_obstacle is False:
+            left_obstacle = True
+    else:
+        left_obstacle = False
+        right_obstacle = False    
+    print("left:{} right:{}".format(left_obstacle,right_obstacle))
+    # initialize motor speeds at 50% of maxMotorVelocity.
+    leftSpeed  = 0.5 * maxMotorVelocity
+    rightSpeed = 0.5 * maxMotorVelocity
+    # modify speeds according to obstacles
+    if left_obstacle:
+        # turn right
+        leftSpeed  = 0.5 * maxMotorVelocity
+        rightSpeed = -0.5 * maxMotorVelocity
+    elif right_obstacle:
+        # turn left
+        leftSpeed  = -0.5 * maxMotorVelocity
+        rightSpeed = 0.5 * maxMotorVelocity
+    # write actuators inputs
+    leftMotor.setVelocity(leftSpeed)
+    rightMotor.setVelocity(rightSpeed)
+    if obstacle:
+        robot.step(turningSteps * timeStep)
+    print(distances)
+    print(leftSpeed, rightSpeed)
 
     
 
