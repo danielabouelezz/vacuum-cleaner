@@ -1,0 +1,294 @@
+<?xml version="1.0"?>
+<robot name="/home/simon/git/pyikfast/vacuum/robot.urdf" xmlns:xacro="http://ros.org/wiki/xacro">
+  <link name="base_link">
+  </link>
+  <joint name="joint_1_motor" type="revolute">
+    <parent link="base_link"/>
+    <child link="LINK_1"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="10" lower="-6" upper="6" velocity="10"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <link name="LINK_1">
+    <visual>
+      <origin xyz="0 0 0" rpy="1.5707963 0 0"/>
+      <geometry>
+        <cylinder radius="0.0225" length="0.063"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="1.5707963 0 0"/>
+      <geometry>
+        <cylinder radius="0.0225" length="0.063"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0 0.0315 0" rpy="1.5707963 0 0"/>
+      <geometry>
+        <sphere radius="0.0225"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0.0315 0" rpy="1.5707963 0 0"/>
+      <geometry>
+        <sphere radius="0.0225"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0 -0.0315 0" rpy="1.5707963 0 0"/>
+      <geometry>
+        <sphere radius="0.0225"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 -0.0315 0" rpy="1.5707963 0 0"/>
+      <geometry>
+        <sphere radius="0.0225"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="joint_2_motor" type="revolute">
+    <parent link="LINK_1"/>
+    <child link="LINK_2"/>
+    <axis xyz="1 0 0"/>
+    <limit effort="10" lower="-6" upper="6" velocity="10"/>
+    <origin xyz="0 0.04 0" rpy="0 0 0"/>
+  </joint>
+  <link name="LINK_2">
+    <visual>
+      <origin xyz="0 0.168 0" rpy="1.5707963 0 0"/>
+      <geometry>
+        <cylinder radius="0.0225" length="0.336"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0.168 0" rpy="1.5707963 0 0"/>
+      <geometry>
+        <cylinder radius="0.0225" length="0.336"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0 0.336 0" rpy="1.5707963 0 0"/>
+      <geometry>
+        <sphere radius="0.0225"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0.336 0" rpy="1.5707963 0 0"/>
+      <geometry>
+        <sphere radius="0.0225"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0 0 0" rpy="1.5707963 0 0"/>
+      <geometry>
+        <sphere radius="0.0225"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="1.5707963 0 0"/>
+      <geometry>
+        <sphere radius="0.0225"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="joint_3_motor" type="revolute">
+    <parent link="LINK_2"/>
+    <child link="LINK_3"/>
+    <axis xyz="1 0 0"/>
+    <limit effort="10" lower="-6" upper="6" velocity="10"/>
+    <origin xyz="0 0.324 0" rpy="0 0 0"/>
+  </joint>
+  <link name="LINK_3">
+    <visual>
+      <origin xyz="0 0.161 0" rpy="1.5707963 0 0"/>
+      <geometry>
+        <cylinder radius="0.0225" length="0.334"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0.161 0" rpy="1.5707963 0 0"/>
+      <geometry>
+        <cylinder radius="0.0225" length="0.334"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0 0.328 0" rpy="1.5707963 0 0"/>
+      <geometry>
+        <sphere radius="0.0225"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0.328 0" rpy="1.5707963 0 0"/>
+      <geometry>
+        <sphere radius="0.0225"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0 -0.006 0" rpy="1.5707963 0 0"/>
+      <geometry>
+        <sphere radius="0.0225"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 -0.006 0" rpy="1.5707963 0 0"/>
+      <geometry>
+        <sphere radius="0.0225"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="joint_4_motor" type="revolute">
+    <parent link="LINK_3"/>
+    <child link="LINK_4"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="10" lower="-6" upper="6" velocity="10"/>
+    <origin xyz="0 0.324 0" rpy="0 0 0"/>
+  </joint>
+  <link name="LINK_4">
+    <visual>
+      <origin xyz="0 0.01 0" rpy="1.5707963 0 0"/>
+      <geometry>
+        <cylinder radius="0.0225" length="0.04"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0.01 0" rpy="1.5707963 0 0"/>
+      <geometry>
+        <cylinder radius="0.0225" length="0.04"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0 0.03 0" rpy="1.5707963 0 0"/>
+      <geometry>
+        <sphere radius="0.0225"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0.03 0" rpy="1.5707963 0 0"/>
+      <geometry>
+        <sphere radius="0.0225"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0 -0.01 0" rpy="1.5707963 0 0"/>
+      <geometry>
+        <sphere radius="0.0225"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 -0.01 0" rpy="1.5707963 0 0"/>
+      <geometry>
+        <sphere radius="0.0225"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="joint_5_motor" type="revolute">
+    <parent link="LINK_4"/>
+    <child link="LINK_5"/>
+    <axis xyz="1 0 0"/>
+    <limit effort="10" lower="-6" upper="6" velocity="10"/>
+    <origin xyz="0 0.03 0" rpy="0 0 0"/>
+  </joint>
+  <link name="LINK_5">
+    <visual>
+      <origin xyz="0 0.02 0" rpy="1.5707963 0 0"/>
+      <geometry>
+        <cylinder radius="0.0225" length="0.04"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0.02 0" rpy="1.5707963 0 0"/>
+      <geometry>
+        <cylinder radius="0.0225" length="0.04"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0 0.04 0" rpy="1.5707963 0 0"/>
+      <geometry>
+        <sphere radius="0.0225"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0.04 0" rpy="1.5707963 0 0"/>
+      <geometry>
+        <sphere radius="0.0225"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0 1.7347235e-18 0" rpy="1.5707963 0 0"/>
+      <geometry>
+        <sphere radius="0.0225"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 1.7347235e-18 0" rpy="1.5707963 0 0"/>
+      <geometry>
+        <sphere radius="0.0225"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="joint_6_motor" type="revolute">
+    <parent link="LINK_5"/>
+    <child link="LINK_6"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="10" lower="-6" upper="6" velocity="10"/>
+    <origin xyz="0 0.04 0" rpy="0 0 0"/>
+  </joint>
+  <link name="LINK_6">
+    <visual>
+      <origin xyz="3.9440968e-22 0.055 5.5108544e-12" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.25 0.02 0.06"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="3.9440968e-22 0.055 5.5108544e-12" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.25 0.02 0.06"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="3.9440968e-22 0.025 5.5108544e-12" rpy="1.5707963 0 0"/>
+      <geometry>
+        <cylinder radius="0.0225" length="0.032"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="3.9440968e-22 0.025 5.5108544e-12" rpy="1.5707963 0 0"/>
+      <geometry>
+        <cylinder radius="0.0225" length="0.032"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="3.9440968e-22 0.041 5.5108544e-12" rpy="1.5707963 0 0"/>
+      <geometry>
+        <sphere radius="0.0225"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="3.9440968e-22 0.041 5.5108544e-12" rpy="1.5707963 0 0"/>
+      <geometry>
+        <sphere radius="0.0225"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="3.9440968e-22 0.009 5.5108544e-12" rpy="1.5707963 0 0"/>
+      <geometry>
+        <sphere radius="0.0225"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="3.9440968e-22 0.009 5.5108544e-12" rpy="1.5707963 0 0"/>
+      <geometry>
+        <sphere radius="0.0225"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="solid">
+  </link>
+  <joint name="LINK_6_solid_joint" type="fixed">
+    <parent link="LINK_6"/>
+    <child link="solid"/>
+    <origin xyz="3.9440968e-22 0.065 5.5108544e-12" rpy="0 0 0"/>
+  </joint>
+</robot>
