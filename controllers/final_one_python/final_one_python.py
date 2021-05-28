@@ -2,7 +2,8 @@
 
 
 from controller import Supervisor
-
+import cv2
+import numpy as np
 
 
 # Get reference to the robot.
@@ -15,6 +16,9 @@ timeStep = int(robot.getBasicTimeStep())
 maxMotorVelocity = 6
 # For how many steps the robot turns when detecting an obstacle (higher number turns more)
 turningSteps = 20
+
+
+P_COEFFICIENT = 0.1
 
 
 
@@ -74,8 +78,42 @@ initialVelocity = 0.7 * maxMotorVelocity
 leftMotor.setVelocity(initialVelocity)
 rightMotor.setVelocity(initialVelocity)
 
+
+def get_image_from_camera():
+    """
+    Take an image from the camera device and prepare it for OpenCV processing:
+    - convert data type,
+    - convert to RGB format (from BGRA), and
+    - rotate & flip to match the actual image.
+    """
+    img = camera.getImageArray()
+    img = np.asarray(img, dtype=np.uint8)
+    img = cv2.cvtColor(img, cv2.COLOR_BGRA2RGB)
+    img = cv2.rotate(img, cv2.ROTATE_90_CLOCKWISE)
+    return cv2.flip(img, 1)
+
 while robot.step(timeStep) != -1:
     # Read values from four distance sensors and calibrate.
+    
+    img = get_image_from_camera()
+
+    # Segment the image by color in HSV color space
+    img = cv2.cvtColor(img, cv2.COLOR_RGB2HSV)
+    mask = cv2.inRange(img, np.array([50, 150, 0]), np.array([200, 230, 255]))
+
+    # Find the largest segmented contour (red ball) and it's center
+    contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+    largest_contour = max(contours, key=cv2.contourArea)
+    largest_contour_center = cv2.moments(largest_contour)
+    center_x = int(largest_contour_center['m10'] / largest_contour_center['m00'])
+
+    # Find error (ball distance from image center)
+    error = camera.getWidth() / 2 - center_x
+
+    # Use simple proportional controller to follow the ball
+    leftMotor.setVelocity(- error * P_COEFFICIENT)
+    rightMotor.setVelocity(error * P_COEFFICIENT)
+    
     distances = []
     for sensor in distanceSensors:
         distances.append(sensor.getValue())
