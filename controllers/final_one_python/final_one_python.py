@@ -16,6 +16,8 @@ timeStep = int(robot.getBasicTimeStep())
 maxMotorVelocity = 6
 # For how many steps the robot turns when detecting an obstacle (higher number turns more)
 turningSteps = 20
+# Distance from object (furniture) the robot should stop at
+stopDistance = 1
 
 
 P_COEFFICIENT = 0.1
@@ -31,7 +33,7 @@ P_COEFFICIENT = 0.1
 camera = robot.getDevice('camera')
 camera.enable(timeStep)
 camera.recognitionEnable(timeStep)
-camera.getRecognitionObjects()
+
 lidar=robot.getDevice('lidar')
 lidar.enable(timeStep)
 lidar.getRangeImage()
@@ -78,6 +80,7 @@ initialVelocity = 0.7 * maxMotorVelocity
 leftMotor.setVelocity(initialVelocity)
 rightMotor.setVelocity(initialVelocity)
 
+<<<<<<< HEAD
 
 def get_image_from_camera():
     """
@@ -93,6 +96,9 @@ def get_image_from_camera():
     return cv2.flip(img, 1)
 
 while robot.step(timeStep) != -1:
+=======
+def avoid_collision():
+>>>>>>> 5784eb2f559a5037cd3170f0b8af8f4bfcc40234
     # Read values from four distance sensors and calibrate.
     
     img = get_image_from_camera()
@@ -119,7 +125,7 @@ while robot.step(timeStep) != -1:
         distances.append(sensor.getValue())
     # detect obstacles
     obstacle = False
-    if min(distances) < 900:
+    if min(distances) < 500:
         obstacle = True
         left_obstacle = distances[0] + distances[1] < distances[3] + distances[4]            
         right_obstacle = distances[0] + distances[1] > distances[3] + distances[4]
@@ -129,7 +135,7 @@ while robot.step(timeStep) != -1:
     else:
         left_obstacle = False
         right_obstacle = False    
-    print("left:{} right:{}".format(left_obstacle,right_obstacle))
+    # print("left:{} right:{}".format(left_obstacle,right_obstacle))
     # initialize motor speeds at 50% of maxMotorVelocity.
     leftSpeed  = 0.5 * maxMotorVelocity
     rightSpeed = 0.5 * maxMotorVelocity
@@ -142,12 +148,33 @@ while robot.step(timeStep) != -1:
         # turn left
         leftSpeed  = -0.5 * maxMotorVelocity
         rightSpeed = 0.5 * maxMotorVelocity
+    return leftSpeed, rightSpeed, obstacle
+
+while robot.step(timeStep) != -1:
+    leftSpeed, rightSpeed, obstacle = avoid_collision()
+    # OBJECT RECOGNITION -------------------
+    recognitionObjects = camera.getRecognitionObjects()
+    if len(recognitionObjects) > 0:
+        recognitionPosition = recognitionObjects[0].get_position()
+        recognitionSize = recognitionObjects[0].get_size()
+        leftSpeed += recognitionPosition[0] + recognitionSize[0] / 2 - 0.2
+        rightSpeed -= recognitionPosition[0] + recognitionSize[0] / 2 - 0.2
+        if stopDistance + recognitionPosition[2] > 0:
+            leftSpeed = rightSpeed = 0
+        print(recognitionPosition, recognitionSize)
+
+    
+
+    
+    
+    
+    
     # write actuators inputs
     leftMotor.setVelocity(leftSpeed)
     rightMotor.setVelocity(rightSpeed)
     if obstacle:
         robot.step(turningSteps * timeStep)
-    print(distances)
+    
     print(leftSpeed, rightSpeed)
 
     
